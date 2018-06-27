@@ -29,21 +29,11 @@ The app looks for a JSON string from STDIN. This string can controls various app
 
 ```json
 {
-	// Controls if the app should run as a daemon
 	"daemon": false,
-
-	// Controls the interval in minutes between each query to ipify to get the public IP address; only applicable when running as a daemon
 	"interval": 1,
-
-	// Specifies an HTTP endpoint to query when an IP address is loaded or changes
 	"hook": {
-		// Specifies if the HTTP hook is enabled
 		"enabled": false,
-
-		// Specifies the URL for the HTTP endpoint
 		"url": "",
-
-		// Specifies the HTTP method to use when pinging the HTTP endpoint
 		"method": ""
 	}
 }
