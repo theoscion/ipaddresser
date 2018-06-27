@@ -73,7 +73,7 @@ func getIPAddress() apiResponse {
 }
 
 func outputCurrentIP(ipAddress string) {
-	if *currentOutput != "" {
+	if *currentOutput != "" && ipAddress != "" {
 		if *verbose {
 			log.Printf("[INFO] Writing current IP address to %s", *currentOutput)
 		}
