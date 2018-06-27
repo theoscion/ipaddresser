@@ -29,10 +29,30 @@ type emailConfig struct {
 	To   []emailRecipient `json:"to"`
 }
 
-func sendSNSNotification() {
+var snsPrepared = false
 
+var emailPrepared = false
+
+var sns snsConfig
+
+var email emailConfig
+
+func prepareSNSConfig() {
+	if snsPrepared == false {
+		snsPrepared = true
+	}
+}
+
+func prepareEmailConfig() {
+	if emailPrepared == false {
+		emailPrepared = true
+	}
+}
+
+func sendSNSNotification() {
+	prepareSNSConfig()
 }
 
 func sendEmailNotification() {
-
+	prepareEmailConfig()
 }
