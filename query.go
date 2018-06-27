@@ -26,11 +26,11 @@ func monitoredQuery() {
 		currentIP = r.IP
 
 		if changed {
-			if *snsConfig != "" {
+			if *snsConfigFile != "" {
 				sendSNSNotification()
 			}
 
-			if *emailConfig != "" {
+			if *emailConfigFile != "" {
 				sendEmailNotification()
 			}
 		}

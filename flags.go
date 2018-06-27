@@ -12,6 +12,6 @@ var logOutput = flag.String("log", "", "Specifies an optional file to output all
 
 var currentOutput = flag.String("out", "", "Specifies an optional file to output the current IP address to, as plain text")
 
-var snsConfig = flag.String("sns", "", "Specifies an optional JSON configuration to use AWS SNS for IP address change notifications")
+var snsConfigFile = flag.String("sns", "", "Specifies an optional JSON configuration to use AWS SNS for IP address change notifications")
 
-var emailConfig = flag.String("email", "", "Specifies an optional JSON configuration to use an email for IP address change notifications")
+var emailConfigFile = flag.String("email", "", "Specifies an optional JSON configuration to use an email for IP address change notifications")
