@@ -49,4 +49,4 @@ The app looks for a JSON string from STDIN. This string can controls various app
 }
 ```
 
-__Passing no configuration will result the app running as a single query (i.e., not a daemon) with no hook.__
+_Passing no configuration will result the app running as a single query (i.e., not a daemon) with no hook._
