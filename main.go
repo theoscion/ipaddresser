@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -17,29 +16,37 @@ const apiEndpoint = "https://api.ipify.org/?format=json"
 
 var currentIP = ""
 
+var config jsonConfig
+
 func main() {
-	flag.Parse()
+	readSTDIN := true
+	stat, _ := os.Stdin.Stat()
+	if stat.Size() == 0 {
+		log.Print("[WARNING] No configuration provided for ipaddresser from STDIN")
+		config = defaultConfig()
+		readSTDIN = false
+	}
 
-	if *logOutput != "" {
-		lf, err := os.Create(*logOutput)
+	if readSTDIN {
+		jsonString, err := ioutil.ReadAll(os.Stdin)
 		if err != nil {
-			if *verbose {
-				log.Printf("[WARNING] Unable to access log output file: %s", err.Error())
-			}
-
-			*logOutput = ""
-		} else {
-			log.SetOutput(lf)
+			log.Printf("[WARNING] Unable to read configuration for ipaddresser from STDIN: %s", err.Error())
+			config = defaultConfig()
 		}
-		defer lf.Close()
+
+		err = json.Unmarshal(jsonString, &config)
+		if err != nil {
+			log.Printf("[ERROR] Unable to parse config for ipaddresser: %s", err.Error())
+			config = defaultConfig()
+		}
 	}
 
-	if *daemon && *interval < 1 {
-		log.Print("[WARNING] Monitor interval must be at least 1 minute; ignoring specified interval")
-		*interval = 1
+	if config.Daemon && config.QueryInterval < 1 {
+		log.Print("[WARNING] Query interval for checking IP address must be 1 minute or greater; ignoring specified interval")
+		config.QueryInterval = 1
 	}
 
-	if *daemon {
+	if config.Daemon {
 		monitoredQuery()
 	} else {
 		singleQuery()
@@ -47,9 +54,7 @@ func main() {
 }
 
 func getIPAddress() apiResponse {
-	if *verbose {
-		log.Printf("[INFO] Querying ipify at %s", apiEndpoint)
-	}
+	log.Printf("[INFO] Querying ipify at %s", apiEndpoint)
 
 	res, err := http.Get(apiEndpoint)
 	if err != nil {
@@ -57,9 +62,7 @@ func getIPAddress() apiResponse {
 		os.Exit(1)
 	}
 
-	if *verbose {
-		log.Print("[INFO] Parsing ipify response")
-	}
+	log.Print("[INFO] Parsing ipify response")
 
 	var r apiResponse
 	jsonString, _ := ioutil.ReadAll(res.Body)
@@ -70,36 +73,4 @@ func getIPAddress() apiResponse {
 	}
 
 	return r
-}
-
-func outputCurrentIP(ipAddress string) {
-	if *currentOutput != "" && ipAddress != "" {
-		if *verbose {
-			log.Printf("[INFO] Writing current IP address to %s", *currentOutput)
-		}
-
-		writeFile := true
-
-		f, err := os.Create(*currentOutput)
-		if err != nil {
-			if *verbose {
-				log.Printf("[WARNING] Unable to access current output file: %s", err.Error())
-			}
-
-			*currentOutput = ""
-			writeFile = false
-		}
-		defer f.Close()
-
-		if writeFile {
-			_, err = f.Write([]byte(ipAddress))
-			if err != nil {
-				if *verbose {
-					log.Printf("[WARNING] Unable to write IP address to current output file: %s", err.Error())
-				}
-
-				*currentOutput = ""
-			}
-		}
-	}
 }
