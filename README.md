@@ -9,6 +9,7 @@ To install ipaddresser, simply run the following command:
 
 ```bash
 go get github.com/Theoscion/ipaddresser
+go install github.com/Theoscion/ipaddresser
 ```
 
 Once installed, you can run the following command:
