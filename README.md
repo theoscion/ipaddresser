@@ -2,7 +2,7 @@
 This is a Go-based, cross-platform app for retrieving, storing and/or monitoring the public IP address for a computer or network
 
 ## Prerequisites 
-The only requirements is that you have [Golang](https://golang.org/) installed and have an active internet connection.
+You must have [Golang](https://golang.org/) installed and theremust be an active internet connection.
 
 ## Installation
 To install ipaddresser, simply run the following command:
