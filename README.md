@@ -12,6 +12,12 @@ go get github.com/Theoscion/ipaddresser
 go install github.com/Theoscion/ipaddresser
 ```
 
+To install at a custom location (e.g., `/usr/local/bin`), you can run:
+
+```bash
+go build -o /usr/local/bin/ipaddresser github.com/Theoscion/ipaddresser
+```
+
 Once installed, you can run the following command:
 
 ```bash
