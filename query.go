@@ -6,54 +6,45 @@ import (
 	"time"
 )
 
-func monitoredQuery() {
-	for {
-		r := getIPAddress()
-
-		changed := false
-
-		if currentIP == "" {
-			log.Printf("[RESULT] Current IP Address\t%s", r.IP)
-			outputCurrentIP(r.IP)
-		} else if r.IP != currentIP {
-			log.Printf("[RESULT] New IP Address\t%s", r.IP)
-			outputCurrentIP(r.IP)
-			changed = true
-		} else if *verbose {
-			log.Printf("[RESULT] Same IP Address\t%s", r.IP)
-		}
-
-		currentIP = r.IP
-
-		if changed {
-			if *snsConfigFile != "" {
-				sendSNSNotification()
-			}
-
-			if *emailConfigFile != "" {
-				sendEmailNotification()
-			}
-		}
-
-		if *verbose {
-			log.Printf("[INFO] Sleeping for %d minute", *interval)
-		}
-
-		time.Sleep(time.Duration(*interval) * time.Minute)
-
-		if *verbose {
-			log.Println("[INFO] Waking up from sleep")
-		}
-	}
+func Get() string {
+	r := getIPAddress()
+	return r.IP
 }
 
 func singleQuery() {
 	r := getIPAddress()
-	outputCurrentIP(r.IP)
 
-	if *verbose {
-		log.Printf("[RESULT] Current IP Address\t%s", r.IP)
-	} else {
-		fmt.Println(r.IP)
+	log.Printf("[RESULT] Current IP Address\t%s", r.IP)
+
+	fmt.Println(r.IP)
+}
+
+func monitoredQuery() {
+	for {
+		r := getIPAddress()
+
+		if currentIP == "" {
+			log.Printf("[RESULT] Current IP Address:\t%s", r.IP)
+			fmt.Println(r.IP)
+			runHook(r.IP, true)
+		} else if r.IP != currentIP {
+			log.Printf("[RESULT] New IP Address:t%s", r.IP)
+			fmt.Println(r.IP)
+			runHook(r.IP, false)
+		} else {
+			log.Printf("[RESULT] Same IP Address:\t%s", r.IP)
+		}
+
+		currentIP = r.IP
+
+		if config.QueryInterval == 1 {
+			log.Print("[INFO] Sleeping for 1 minute")
+		} else {
+			log.Printf("[INFO] Sleeping for %d minutes", config.QueryInterval)
+		}
+
+		time.Sleep(time.Duration(config.QueryInterval) * time.Minute)
+
+		log.Println("[INFO] Waking up from sleep")
 	}
 }
