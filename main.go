@@ -10,7 +10,7 @@ import (
 
 // apiResponse is a struct that can parse the result from the ipify service
 type apiResponse struct {
-	IP string `json:"ip"`
+	IP string `json:"ip"` // Specifies the IP address
 }
 
 // apiEndpoint is a constant that specifies the fully-qualified endpoint for retrieving a public IP address
