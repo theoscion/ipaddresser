@@ -9,9 +9,10 @@ type jsonConfig struct {
 
 // configHook contains the configuration for the HTTP hook
 type configHook struct {
-	Enabled bool   `json:"enabled"` // Specifies if the HTTP hook is enabled
-	URL     string `json:"url"`     // Specifies the URL to use for the HTTP hook
-	Method  string `json:"method"`  // Specifies the HTTP method (e.g., GET, POST) to use for the HTTP hook
+	Enabled         bool   `json:"enabled"`         // Specifies if the HTTP hook is enabled
+	SubmitForSameIP bool   `json:"submitForSameIP"` // Specifies that the HTTP hook when the IP is the same as the last query
+	URL             string `json:"url"`             // Specifies the URL to use for the HTTP hook
+	Method          string `json:"method"`          // Specifies the HTTP method (e.g., GET, POST) to use for the HTTP hook
 }
 
 // defaultConfig returns a default jsonConfig{}, which is used when no JSON configuration is provided

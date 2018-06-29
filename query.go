@@ -36,14 +36,17 @@ func monitoredQuery() {
 		// Determine how to print the result, based on if the IP address has already been loaded, if it has changed, or if it is the same
 		if currentIP == "" {
 			log.Printf("[RESULT] Current IP Address:\t%s", r.IP)
-			fmt.Println(r.IP)
 			runHook(r.IP, true)
+			fmt.Println(r.IP)
 		} else if r.IP != currentIP {
 			log.Printf("[RESULT] New IP Address:t%s", r.IP)
-			fmt.Println(r.IP)
 			runHook(r.IP, false)
+			fmt.Println(r.IP)
 		} else {
 			log.Printf("[RESULT] Same IP Address:\t%s", r.IP)
+			if config.Hook.SubmitForSameIP {
+				runHook(r.IP, false)
+			}
 		}
 
 		// Update the current IP address to the new IP address
