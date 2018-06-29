@@ -24,6 +24,14 @@ Once installed, you can run the following command:
 ipaddresser
 ```
 
+To update the package, you can follow standard updating procedures for Go packages:
+
+```bash
+go get -u github.com/Theoscion/ipaddresser
+```
+
+Once that is complete, you can repeat the `go install` or `go build` commands listed above.
+
 ## Configuration
 The app looks for a JSON string from STDIN. This string controls various app settings and should match the following structure:
 
@@ -33,8 +41,9 @@ The app looks for a JSON string from STDIN. This string controls various app set
 	"interval": 1,
 	"hook": {
 		"enabled": false,
+		"submitForSameIP": false,
 		"url": "",
-		"method": ""
+		"method": "",
 	}
 }
 ```
