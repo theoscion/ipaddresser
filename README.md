@@ -25,7 +25,7 @@ ipaddresser
 ```
 
 ## Configuration
-The app looks for a JSON string from STDIN. This string can controls various app settings and should match the following structure:
+The app looks for a JSON string from STDIN. This string controls various app settings and should match the following structure:
 
 ```json
 {
