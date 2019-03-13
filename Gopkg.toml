@@ -28,3 +28,11 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "github.com/sirupsen/logrus"
+  version = "1.4.0"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/stretchr/testify"
