@@ -1,5 +1,5 @@
 # ipaddresser
-This is a Go-based, cross-platform app for retrieving, storing and/or monitoring the public IP address for a computer or network
+This is a Go-based, cross-platform app for retrieving, storing and/or monitoring the public IP address for a computer or network, using the API offered by [Ipify](https://www.ipify.org/).
 
 ## Prerequisites 
 You must have [Golang](https://golang.org/) installed and there must be an active internet connection.
