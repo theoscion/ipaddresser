@@ -45,7 +45,7 @@ _Order does not matter when specifying a flag._
 
 ### Arguments
 
-All arguments that aren't flags are used to define webhook URLs. Each argument would be an endpoint that should be triggered. When the application is run, it will fire a POST request to each webhook URL specified
+All arguments that aren't flags are used to define webhook URLs. Each argument would be an endpoint that should be triggered. When the application is run, it will fire a POST request to each webhook URL specified. All webhooks run concurrently, so order does not matter.
 
 For example:
 
@@ -53,7 +53,7 @@ For example:
 ipaddresser -v -d https://example.com/my-ip-monitor https://example.com/notification-service
 ```
 
-The example command above will send a request to 2 webhook URLs every, but only when the IP address changes. The request body submitted to each webhook will look like this (as an example):
+The example command above will send a request to 2 webhook URLs every minute, but only when the IP address changes. The request body submitted to each webhook will look like this (as an example):
 
 ```json
 {
@@ -64,4 +64,4 @@ The example command above will send a request to 2 webhook URLs every, but only 
 }
 ```
 
-The `firstCheck` property specifies if it is the first time the IP is being reported.  When running as a single request, that property will always be `true`. When running as a daemon, it will be `true` the first time all webhooks are run; all subsequent runs, the value will be `false`. When `firstCheck` property is `false`, the `oldIP` will always be an empty string. The `oldIP` property will contain the last known IP address; this will only have a value when running as a daemon. The `newIP` property will contain the IP address returned from the IP service (i.e., Ipify).
+The `firstCheck` property specifies if it is the first time the IP is being reported.  When running as a single request, that property will always be `true`. When running as a daemon, it will be `true` the first time all webhooks are run; all subsequent runs, the value will be `false`. When `firstCheck` property is `true` or when **not** running as a daemon, the `oldIP` will always be an empty string. Otherwise, the `oldIP` property will contain the last known IP address. The `newIP` property will contain the IP address returned from the IP service (i.e., Ipify).
